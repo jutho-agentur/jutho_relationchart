@@ -1,0 +1,139 @@
+<html>
+<head>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<link href="jutho_relationchart.css" rel="stylesheet">
+<link href="page.css" rel="stylesheet">
+<script src="jutho_relationchart.js"></script>
+</head>
+<body>
+
+<div class="jutho_relationchart" id="relationchart_example">
+</div>
+
+<script>
+var data={
+	nodes: {
+		'master':{name:'<a href="http://www.google.de" target="_blank">Master of Desaster</a>',shape:'dot',bg:'black',color:'white'},
+		'king':{name:'King of Wing',shape:'parallelogram',bg:'red',color:'black'},
+		'queen':{name:'Queen of Clean',shape:'square',bg:'pink',color:'black'},
+		'princess':{name:'Princess of Kindness',shape:'star',color:'purple'},
+		'prince':{name:'Prince of Vinc',shape:'tv',color:'purple'},
+		'uncle':{name:'Uncle Duncle',shape:'oval',bg:'purple'},
+	},
+	edges: {
+		master:{ 
+			king:{label:'t<i>e</i>st', bg: 'red', fontsize:'20pt', weight:'8px', fontfamily:'Comic Sans MS'}, 
+			queen:{label:'Zur Queen', bg: 'blue', weight:'4px'},
+			uncle:{},
+		},
+		queen:{ 
+			princess:{}, 
+			prince:{}, 
+		},
+	},
+};
+var chart=jutho_relationchart("#relationchart_example", {bg:'white',nodes:{bg:'lightgray'}});
+chart.render(data);
+
+function add_nodes() {
+	var data2={
+		nodes: {
+			'kaiser':{name:'Kaiser Franz',shape:'square',class:'kaiserklasse'},
+			'kaiserin':{name:'Kaiserin Sissi',shape:'parallelogram'},
+		},
+		edges: {
+			master:{ 
+				kaiser:{}, 
+				kaiserin:{},
+			},
+			kaiser:{ 
+				kaiserin:{}, 
+			},
+		},
+	};
+	chart.render(data2);
+}
+
+function add_nodes2() {
+	var data3={
+		nodes: {
+			'kaiser2':{name:'<a href="http://www.google.de" target="_blank">Kaiser Franz 2</a>',shape:'square',class:'kaiserklasse'},
+			'kaiserin2':{name:'Kaiserin Sissi 2',shape:'parallelogram'},
+		},
+		edges: {
+			kaiser:{ 
+				kaiser2:{}, 
+				kaiserin2:{},
+			},
+			kaiser2:{ 
+				kaiserin2:{}, 
+			},
+		},
+	}
+	chart.render(data3);
+}
+
+function update_edge() {
+	var data4={
+		edges: {
+			master:{ 
+				king:{label:'new Name', bg: 'green', fontsize:'25pt', weight:'4px', fontfamily:'Arial'},
+			},
+		},
+	}
+	chart.render(data4);
+}
+
+function update_node() {
+			<!-- 'king':{name:'King of Wing with a new name',shape:'dot',bg:'orange',color:'black'}, -->
+	var data5={
+		nodes: {
+			'king':{name:'King of Wing with a new name'},
+		},
+	}
+	chart.render(data5);
+}
+
+function update_both() {
+			<!-- 'king':{name:'King of Wing with a new name',shape:'dot',bg:'orange',color:'black'}, -->
+	var data6={
+		nodes: {
+			'king':{name:'King of Wing with a very new name'},
+		},
+		edges: {
+			master:{ 
+				queen:{label:'Zur Queen jetzt neu'},
+			},
+		}
+	}
+	chart.render(data6);
+}
+
+function manipulate() {
+	chart.nodes['trojan']={name:'TROJAN',shape:'tv',bg:'orange',color:'black'};
+	chart.nodes['trojan2']={name:'SECOND TROJAN',shape:'star',bg:'orange',color:'black'};
+	chart.edges['trojan2']={master:{}, king:{}, trojan:{bg:'orange', weight:'8px'}};
+	chart.edges['trojan']={master:{}};
+}
+
+function remove_node(rem) {
+	chart.removeNode(rem);
+}
+</script>
+
+
+<button onclick="add_nodes()">Add Nodes</button>
+<button onclick="add_nodes2()">Add Nodes2</button>
+<button onclick="update_edge()">Update Edge</button>
+<button onclick="update_node()">Update Node</button>
+<button onclick="update_both()">Update Both</button>
+<button onclick="manipulate()">Manipulate Original Object</button>
+<button onclick="chart.reload()">Reload Sheet</button>
+<button onclick="remove_node('princess')">Remove Node Princess</button>
+<button onclick="remove_node(['princess','prince'])">Remove Nodes Princess & Prince</button>
+<button onclick="remove_node(['princess','queen'])">Remove Nodes Princess & Queen</button>
+<button onclick="chart.render({edges:{prince:{king:{}}}})">Add Edge Prince-King</button>
+<button onclick="chart.render({edges:{prince:{kaiser:{}}}})">Add Edge Prince-Kaiser</button>
+<button onclick="console.log(chart)">Log Object</button>
+</body>
+</html>

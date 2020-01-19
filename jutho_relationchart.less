@@ -1,0 +1,132 @@
+/***********************************
+####################################
+  © JuTho-Agentur • www.jutho.com
+  jutho_relationchart Version 1.1
+  19.01.2020
+####################################
+***********************************/
+.jutho_relationchart {
+	position:relative;
+	
+	::selection {
+		background-color:transparent;
+	}
+	
+	.node {
+		position:relative;
+		z-index:1;
+		box-sizing:border-box;
+		display:inline-block; 
+		padding:6px;
+		border-radius:3px;
+		text-align:center;
+		animation:relationchart_fadein 1s ease-in-out 0s 1;
+		
+		&[data-shape=dot], &[data-shape=oval] {
+			padding:12px;
+			border-radius:100%;
+			display:inline-flex!important;
+			justify-content:center;
+			align-items:center;
+		}
+		&[data-shape=star] {
+			border-radius:0;
+			display:inline-flex!important;
+			justify-content:center;
+			align-items:center;
+			padding:0;
+			&:before, &:after {
+				transform-origin:center center;
+				background-color:inherit;
+				content:"";
+				height: 100%;
+				width: 100%;
+				position: absolute;
+				top:0;
+				left:0;
+				z-index:-1;
+			}
+			&:before {
+				/* Rotate */
+				-moz-transform: rotate(30deg);
+				-webkit-transform: rotate(30deg);
+				-ms-transform: rotate(30deg);
+				-o-transform: rotate(30deg);
+				transform: rotate(30deg);
+			}
+			 
+			&:after {
+				/* Rotate */
+				-moz-transform: rotate(-30deg);
+				-webkit-transform: rotate(-30deg);
+				-ms-transform: rotate(-30deg);
+				-o-transform: rotate(-30deg);
+				transform: rotate(-30deg);
+			}
+		}
+		&[data-shape=parallelogram] {
+		   transform: skew(30deg);
+		   padding:10px 15px 10px 15px;
+		   border-radius:0;
+		   .textnode {
+			   transform: skew(-30deg);
+		   }
+		}
+		&[data-shape=tv] {
+			border-radius: ~"50% / 10%"; 
+			text-align: center; 
+			display:inline-flex!important;
+			justify-content:center;
+			align-items:center;
+			&:before {
+				content: ''; 
+				position: absolute; 
+				z-index:-1;
+				top: 10%; bottom: 10%; 
+				right: -5%; 
+				left: -5%; 
+				background: inherit; 
+				border-radius: ~"5% / 50%"; 
+			}
+		}
+		
+		.textnode {
+			display:inline-block;
+			a {
+				color:inherit;
+				text-decoration:none;
+			}
+		}
+	}
+	.edge_wrapper {
+		position:relative;
+		z-index:0;
+		display:flex;
+		justify-content:center;
+		align-items:center;
+		animation:relationchart_fadein 1.5s ease-in-out 0s 1;
+		
+		.edge {
+			position:absolute;
+			z-index:-1;
+			display:block;
+			background-color:gray; /*wird im JS gesetzt*/
+			height:1px; /*wird im JS gesetzt*/
+			width:100%; /*wird im JS gesetzt*/
+			top:100%;
+			transform-origin:bottom left;
+			border-radius:8px;
+			/* transform:rotate(-45deg); */
+		}
+		.textnode {
+			display:block;
+			width:max-content;
+			text-align:center;
+		}
+	}
+}
+
+@keyframes relationchart_fadein {
+	0% {opacity:0}
+	100% {opacity:1}
+}
